@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>    
+<beans xmlns="http://www.springframework.org/schema/beans"    
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xmlns:aop="http://www.springframework.org/schema/aop"   
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:jee="http://www.springframework.org/schema/jee"  
+    xmlns:tx="http://www.springframework.org/schema/tx"  
+    xsi:schemaLocation="    
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd  
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd  
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd  
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">      
+	<!-- 配置数据源 -->
+	<!-- 定义数据源Bean，使用C3P0数据源实现 -->  
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"  
+        destroy-method="close">  
+        <!-- 指定连接数据库的驱动 -->  
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <!-- 指定连接数据库的URL -->  
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/bookonline?characterEncoding=UTF-8"/>
+        <!-- 指定连接数据库的用户名 -->  
+        <property name="user" value="root"/> 
+        <!-- 指定连接数据库的密码 -->  
+        <property name="password" value="123456" />  
+        <!--连接池中保留的最大连接数。Default: 15 -->  
+        <property name="maxPoolSize" value="40" />  
+        <!-- 指定连接数据库连接池的最小连接数 -->  
+        <property name="minPoolSize" value="2" />  
+        <!-- 指定连接数据库连接池的初始化连接数 取值应在minPoolSize与maxPoolSize之间。Default: 3 -->  
+        <property name="initialPoolSize" value="5" />  
+        <!--最大空闲时间,25000秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->  
+        <property name="maxIdleTime" value="25000" />  
+        <!--如果设为true那么在取得连接的同时将校验连接的有效性。Default: false -->  
+        <property name="testConnectionOnCheckin" value="true" />  
+        <!--每18000秒检查所有连接池中的空闲连接。Default: 0 -->  
+        <property name="idleConnectionTestPeriod" value="18000" />  
+    </bean>
+
+	<!-- 配置mybatis的sqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 自动扫描mappers.xml文件 -->
+		<property name="mapperLocations" value="classpath:com/hd/dao/*.xml"></property>
+		<!-- mybatis配置文件 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+	</bean>
+
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.hd.dao"/>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+
+	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
+	
+	<!-- 配置事务通知属性 -->  
+    <!-- <tx:advice id="txAdvice" transaction-manager="transactionManager">  
+        定义事务传播属性  
+        <tx:attributes>  
+            <tx:method name="insert*" propagation="REQUIRED" />  
+            <tx:method name="update*" propagation="REQUIRED" />  
+            <tx:method name="edit*" propagation="REQUIRED" />  
+            <tx:method name="save*" propagation="REQUIRED" />  
+            <tx:method name="add*" propagation="REQUIRED" />  
+            <tx:method name="new*" propagation="REQUIRED" />  
+            <tx:method name="set*" propagation="REQUIRED" />  
+            <tx:method name="remove*" propagation="REQUIRED" />  
+            <tx:method name="delete*" propagation="REQUIRED" />  
+            <tx:method name="change*" propagation="REQUIRED" />  
+            <tx:method name="check*" propagation="REQUIRED" />  
+            <tx:method name="get*" propagation="REQUIRED" read-only="true" />  
+            <tx:method name="find*" propagation="REQUIRED" read-only="true" />  
+            <tx:method name="load*" propagation="REQUIRED" read-only="true" />  
+            <tx:method name="*" propagation="REQUIRED" read-only="true" />  
+        </tx:attributes>  
+    </tx:advice> -->
+    <!-- 配置事务切面 -->  
+   <!--  <aop:config>  
+        <aop:pointcut id="serviceOperation"  
+            expression="execution(* com.hd.service.impl.*.*(..))" />  
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />  
+    </aop:config>  -->
+   <!-- 自动扫描service层 -->
+	<context:component-scan base-package="com.hd.service.impl" />
+</beans>
