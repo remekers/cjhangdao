@@ -248,8 +248,8 @@ document.getElementById('gys_name').style.display='';
              } 			  
 	     else{			  
 			 //ajaxtijiao 
-/* 			$.get("",{keyword:sfvalue},function(data){
-			,"json"); */
+ 			$.get("",{name:$("#name").val()},
+			,"json"); 
 	    	 layer.alert('添加成功！',{
                title: '提示框',				
 			icon:1,		
