@@ -150,4 +150,19 @@
       status = #{status,jdbcType=INTEGER}
     where user_id = #{user_id,jdbcType=INTEGER}
   </update>
+  <select id="selectByPage" parameterType="Map"  resultType="cjhangdao.com.jinglin.sysmanager.model.Userinfo" >
+  		select * from userinfo
+  		   <if test="pageindex!=null and pagesize!=null">
+	         limit #{pageindex},#{pagesize} 
+	       </if> 
+  		
+  </select>
+  <select id="getcount" resultType="int">
+  		select count(1) from userinfo
+  </select>
+  <update id="redpwd" parameterType="int">
+  	update userinfo
+  	set password='123456'
+  	where user_id = #{user_id,jdbcType=INTEGER}
+  </update>
 </mapper>

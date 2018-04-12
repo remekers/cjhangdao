@@ -1,6 +1,7 @@
 package cjhangdao.com.jinglin.sysmanager.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import cjhangdao.com.jinglin.sysmanager.model.Userinfo;
 
@@ -16,4 +17,10 @@ public interface IUserinfoDao {
     int updateByPrimaryKeySelective(Userinfo record);
 
     int updateByPrimaryKey(Userinfo record);
+    
+    List<Userinfo> selectByPage(Map<String,Object> map);
+    
+    int getcount();
+    
+    void redpwd(int user_id);
 }

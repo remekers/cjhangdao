@@ -1,5 +1,8 @@
 package cjhangdao.com.jinglin.sysmanager.service.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -46,6 +49,24 @@ public class UserinfoServiceImpl implements IUserinfoService{
 	public int updateByPrimaryKey(Userinfo record) {
 		// TODO Auto-generated method stub
 		return dao.updateByPrimaryKey(record);
+	}
+
+
+	public List<Userinfo> selectByPage(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.selectByPage(map);
+	}
+
+
+	public int getcount() {
+		// TODO Auto-generated method stub
+		return dao.getcount();
+	}
+
+
+	public void redpwd(int user_id) {
+		dao.redpwd(user_id);
+		
 	}
 
 }
