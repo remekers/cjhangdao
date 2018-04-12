@@ -108,7 +108,7 @@
 						<li><a href="#" class="dropdown-toggle"><i class="icon-edit"></i><span class="menu-text"> 系统管理 </span><b class="arrow icon-angle-down"></b></a>
 							<ul class="submenu">
 								<li class="home"><a href="javascript:void(0)" name="菜单管理.html" title="菜单管理" class="iframeurl"><i class="icon-double-angle-right"></i>菜单管理</a></li>
-								<li class="home"><a href="javascript:void(0)" name="角色管理.html" title="角色管理"  class="iframeurl"><i class="icon-double-angle-right"></i>角色管理</a></li>
+								<li class="home"><a href="javascript:void(0)" name="${pageContext.request.contextPath}/cjhangdao/roleinfo/roleinfo" title="角色管理"  class="iframeurl"><i class="icon-double-angle-right"></i>角色管理</a></li>
                                 <li class="home"><a href="javascript:void(0)" name="${pageContext.request.contextPath}/cjhangdao/userinfo/userinfo" title="用户管理" class="iframeurl"><i class="icon-double-angle-right"></i>用户管理</a></li>
                                 <!--根据用户权限显示用户管理-->
                                 <li class="home"><a href="javascript:void(0)" name="权限用户管理界面.html" title="权限用户管理" class="iframeurl"><i class="icon-double-angle-right"></i>权限用户管理</a></li>
